@@ -4,7 +4,7 @@ import Form from '../components/Form';
 
 const Login = () => {
 
-  const handleOnSubmit = (form, callback) => {
+  const onSubmitHandler = (form, callback) => {
     console.log('Login form:', form);
     callback();
   };
@@ -15,7 +15,7 @@ const Login = () => {
         title={'Login'}
         attributes={attributes}
         button={'Login'}
-        onSubmit={handleOnSubmit}
+        onSubmit={onSubmitHandler}
         redirect={{
           label: "Don't have an account?",
           link: {
