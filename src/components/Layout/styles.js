@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { v, b } from "../../styles/variables";
 
-export const SMain = styled.main`
+export const Main = styled.main`
   transition: 0.3s ease padding;
   padding: ${v.mdSpacing} ${v.mdSpacing};
   @media ${b.sm} {
@@ -14,6 +14,4 @@ export const SMain = styled.main`
     width: 100%;
     max-width: ${v.lg};
   }
-  /* display: flex;
-  justify-content: center; */
 `;
