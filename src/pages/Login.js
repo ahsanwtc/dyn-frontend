@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import { FixedContainer } from '../components/Containers/styles';
 import Form from '../components/Form';
+import Message from '../components/Message';
+import { validateForm, VALIDATORS } from '../util';
 
 const Login = () => {
+  const [error, setError] = useState([]);
 
   const onSubmitHandler = (form, callback) => {
     console.log('Login form:', form);
-    callback();
+    setError([]);
+    const validation = validateForm(form, attributes);
+    setError(validation);    
+    console.log(validation);
+    // callback();
   };
 
   return (
@@ -24,6 +32,7 @@ const Login = () => {
           }
         }}
       />
+      {error.length > 0 && <Message messages={error} />}
     </FixedContainer>
   );
 };
@@ -33,11 +42,13 @@ const attributes = [
     label: 'Email',
     name: 'email',
     type: 'text',
+    validator: VALIDATORS.email
   },
   {
     label: 'Password',
     name: 'password',
     type: 'password',
+    validator: VALIDATORS.password
   },
 ]
 

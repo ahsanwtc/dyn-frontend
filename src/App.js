@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import { GlobalStyle } from './styles/globalStyles';

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { 
   RedirectLink, Button, Form, FormControl, FormTitle, Input, Label, Redirect, RedirectLabel
 } from './styles';
@@ -11,6 +12,7 @@ const FormComponent = ({ title, attributes, button, onSubmit, redirect }) => {
   const onSubmitHandler = () => onSubmit(form, () => setForm(initialState));
 
   return (
+
     <Form autoComplete='off'>
       <FormTitle>{title}</FormTitle>
       
