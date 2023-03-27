@@ -1,0 +1,49 @@
+name: Deploy master branch
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    env: 
+      BUCKET: www.dyn.iamahsan.dev
+      DIST: build
+      DIST_ID: E38073HPQOKZ21
+
+    steps:
+    - name: Use Node.js ${{ matrix.node-version }}
+    - uses: actions/checkout@v3    
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+
+    - name: Install Dependencies
+      run: |
+      node --version
+      npm ci
+
+    - name: Run tests
+      run: npm run test
+
+    - name: Build static website
+      run: npm run build
+
+    - name: Copy files to the production website with the AWS CLI
+      run: aws s3 sync --delete ${{ env.DIST }} s3://${{ env.BUCKET }}
+
+    - name: Invalidate the cache
+      run: aws cloudfront create-invalidation --distribution-id ${{ env.DIST_ID }} --paths "/*"
