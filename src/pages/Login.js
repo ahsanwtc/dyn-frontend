@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { FixedContainer } from '../components/Containers/styles';
 import Form from '../components/Form';
-import Message from '../components/Message';
-import { validateForm, VALIDATORS, login, getProfile } from '../util';
+import { ErrorMessage } from '../components/Message';
+import { validateForm, VALIDATORS, login } from '../util';
 import { UserContext } from '../App';
 
 const Login = () => {
@@ -56,7 +56,7 @@ const Login = () => {
           }
         }}
       />
-      {error.length > 0 && <Message messages={error} />}
+      {error.length > 0 && <ErrorMessage messages={error} />}
     </FixedContainer>
   );
 };
