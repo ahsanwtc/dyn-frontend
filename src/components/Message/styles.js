@@ -13,3 +13,17 @@ export const ErrorMessage = styled.div`
   flex-direction: column;
   font-size: small;
 `;
+
+export const SuccessMessage = styled.div`
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  border-color: #badbcc;
+  margin: 5px 0px;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  color: #0f5132;
+  background-color: #d1e7dd;
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+`;

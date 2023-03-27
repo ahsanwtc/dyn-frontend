@@ -1,15 +1,22 @@
 import React from 'react';
 
 import { 
-  ErrorMessage
+  ErrorMessage as EM,
+  SuccessMessage as SM
 } from './styles';
 
-const Message = ({ messages }) => {
+export const ErrorMessage = ({ messages }) => {
   return (
-    <ErrorMessage>      
+    <EM>      
       {messages.map((message, index) => <div key={index}>{message}</div>)}      
-    </ErrorMessage>
+    </EM>
   );
 };
 
-export default Message;
+export const SuccessMessage = ({ messages }) => {
+  return (
+    <SM>      
+      {messages.map((message, index) => <div key={index}>{message}</div>)}      
+    </SM>
+  );
+};
