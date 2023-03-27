@@ -1,19 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import { FixedContainer } from '../components/Containers/styles';
 import Form from '../components/Form';
 import Message from '../components/Message';
-import { validateForm, VALIDATORS } from '../util';
+import { validateForm, VALIDATORS, login, getProfile } from '../util';
+import { UserContext } from '../App';
 
 const Login = () => {
   const [error, setError] = useState([]);
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const onSubmitHandler = (form, callback) => {
+  if (user) {
+    navigate('/');
+    console.log('redirecting...');
+  }
+
+  const onSubmitHandler = async (form, callback) => {
     console.log('Login form:', form);
     setError([]);
     const validation = validateForm(form, attributes);
     setError(validation);    
     console.log(validation);
+
+    /* no errors */
+    if (validation.length === 0) {
+      callback(true);
+      const response = await login({ ...form });
+      if (response.error) {
+        setError([response.error]);
+        callback(false);
+        return;
+      }
+
+      console.log('redirecting...');
+      navigate('/');
+    }
+
     // callback();
   };
 
