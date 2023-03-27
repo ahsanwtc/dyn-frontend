@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState, useMemo } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Routes, Route } from 'react-router-dom';
 
@@ -9,20 +9,26 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 
+export const UserContext = createContext(null);
+
 function App() {
+  const [user, setUser] = useState(null);
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+
   const theme = lightTheme;
-  const user = null;
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Layout>
               
+        <UserContext.Provider value={value}>
         <Routes>
-          <Route  path="/" element={user ? <Profile /> : <Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+            <Route  path="/" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
         </Routes>
+        </UserContext.Provider>
         
       </Layout>
     </ThemeProvider>
