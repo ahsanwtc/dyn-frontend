@@ -50,16 +50,22 @@ export const http = async (method = 'GET', path, data, token) => {
 
   try {
     const response = await fetch(url, params);
+    const result = await response.json();
     
     if (response.status === 200) {
-      const result = await response.json();
-      return result;
+      return { status: 'ok', data: { ...result }};
     }
+
+    if (response.status === 500 || response.status === 400) {
+      const { message } = result;
+      return { status: 'error', message };
+    }
+
   } catch (error) {
     console.log(error);
   }
 
-  return null;
+  return { status: 'error', message: 'Unknown error' };
 };
 
 export const getAccessToken = () => {
@@ -89,10 +95,10 @@ export const getProfile = async () => {
 export const login = async ({ email, password }) => {
   const response = await http('POST', 'login', { email, password });
 
-  if (response && response.token) {
-    setAccessToken(response.token);
-    return response.token;
+  if (response.status === 'ok') {
+    setAccessToken(response.data.token);
+    return { token: response.data.token };
   }
 
-  return null;
+  return { error: response.message };
 };
