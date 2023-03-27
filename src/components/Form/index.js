@@ -7,9 +7,10 @@ import {
 const FormComponent = ({ title, attributes, button, onSubmit, redirect }) => {
   const initialState = createFormStateObject(attributes);
   const [form, setForm] = useState(initialState);
+  const [disabled, setDisabled] = useState(false);
 
   const onChangeHandler = e => setForm(state => ({ ...state, [e.target.name]: e.target.value }));
-  const onSubmitHandler = () => onSubmit(form, () => setForm(initialState));
+  const onSubmitHandler = () => onSubmit(form, disabled => setDisabled(disabled));
 
   return (
 
@@ -31,6 +32,7 @@ const FormComponent = ({ title, attributes, button, onSubmit, redirect }) => {
           e.preventDefault();
           onSubmitHandler();
         }}
+        disabled={disabled}
       >{button}</Button>
 
       {redirect && 

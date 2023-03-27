@@ -52,6 +52,9 @@ export const Button = styled.button`
   border-radius: ${v.borderRadius};
   margin-top: ${v.mdSpacing};
   cursor: pointer;
+  :disabled {
+    opacity: 0.4;
+  }
 `;
 
 export const Redirect = styled.div`
