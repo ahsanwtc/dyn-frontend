@@ -7,10 +7,10 @@ const Header = () => {
       <HeaderContent>
         <Logo>DYN Task </Logo>
         <Attribute
-          href={""}
+          href={"https://iamahsan.dev"}
           target="_blank"
         >
-            jsan
+          iamahsan.dev
         </Attribute>
       </HeaderContent>
     </H>
