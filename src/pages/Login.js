@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { FixedContainer } from '../components/Containers/styles';
 import Form from '../components/Form';
 import { ErrorMessage } from '../components/Message';
-import { validateForm, VALIDATORS, login } from '../util';
+import { validateForm, VALIDATORS, login, getAccessToken } from '../util';
 import { UserContext } from '../App';
 
 const Login = () => {
@@ -12,10 +12,13 @@ const Login = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  if (user) {
-    navigate('/');
-    console.log('redirecting...');
-  }
+  useEffect(() => {
+    
+    if (getAccessToken() || user) {
+      navigate('/');
+    }
+
+  }, [navigate, user]);
 
   const onSubmitHandler = async (form, callback) => {
     console.log('Login form:', form);
@@ -34,7 +37,6 @@ const Login = () => {
         return;
       }
 
-      console.log('redirecting...');
       navigate('/');
     }
 

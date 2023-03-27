@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { FixedContainer } from '../components/Containers/styles';
 import Form from '../components/Form';
-import { validateForm, VALIDATORS, register } from '../util';
+import { validateForm, VALIDATORS, register, getAccessToken } from '../util';
 import { ErrorMessage, SuccessMessage } from '../components/Message';
+import { UserContext } from '../App';
 
 
 const Register = () => {
   const [error, setError] = useState([]);
   const [success, setSuccess] = useState([]);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    
+    if (getAccessToken() || user) {
+      navigate('/');
+    }
+
+  }, [navigate, user]);
 
   const onSubmitHandler = async (form, callback) => {
     console.log('Register form:', form);
