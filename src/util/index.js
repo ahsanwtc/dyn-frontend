@@ -102,3 +102,13 @@ export const login = async ({ email, password }) => {
 
   return { error: response.message };
 };
+
+export const register = async ({ email, password, favouriteTeam }) => {
+  const response = await http('POST', 'register', { email, password, favouriteTeam });
+
+  if (response.status === 'ok') {
+    return { data: response.data.message };
+  }
+
+  return { error: response.message };
+};

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { FixedContainer } from '../components/Containers/styles';
+import { useNavigate } from "react-router-dom";
 
+import { FixedContainer } from '../components/Containers/styles';
 import Form from '../components/Form';
-import { validateForm, VALIDATORS } from '../util';
-import Message from '../components/Message';
+import { validateForm, VALIDATORS, register } from '../util';
+import { ErrorMessage, SuccessMessage } from '../components/Message';
 
 
 const Register = () => {
   const [error, setError] = useState([]);
+  const [success, setSuccess] = useState([]);
+  const navigate = useNavigate();
 
-  const onSubmitHandler = (form, callback) => {
+  const onSubmitHandler = async (form, callback) => {
     console.log('Register form:', form);
     setError([]);
     const validation = validateForm(form, attributes);
@@ -20,7 +23,20 @@ const Register = () => {
     }
 
     setError(validation);    
-    console.log(validation);
+    
+    /* no errors */
+    if (validation.length === 0) {
+      callback(true);
+      const response = await register({ ...form });
+      
+      if (response.error) {
+        setError([response.error]);
+        callback(false);
+        return;
+      }
+      setSuccess([response.data]);
+      setTimeout(() => navigate('/login'), 2000);
+    }
   };
 
   return (
@@ -38,7 +54,8 @@ const Register = () => {
           }
         }}
       />
-      {error.length > 0 && <Message messages={error} />}
+      {error.length > 0 && <ErrorMessage messages={error} />}
+      {success.length > 0 && <SuccessMessage messages={success} />}
     </FixedContainer>
   );
 };
