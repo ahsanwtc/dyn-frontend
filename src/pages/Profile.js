@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
-import { Button } from '../components/Form/styles';
+import { Button, FormTitle, Label, FormControl } from '../components/Form/styles';
+import { FixedContainer } from '../components/Containers/styles';
 import { getProfile, removeAccessToken } from '../util';
 
 const Profile = () => {
@@ -34,18 +35,16 @@ const Profile = () => {
   };
 
   return (
-
-    <div>
-      <h3>Profile</h3>
-      {loading && <pre>Loading...</pre>}
-      {!loading &&
-        <div>
-        <p>Email: {user.email}</p>
-        <p>Favourite Team: {user.favouriteTeam}</p>
-        <p><Button onClick={onLogout}>Logout</Button></p>
-        </div>
-      }
-    </div>
+    <FixedContainer size={275}>
+      <FormTitle>Profile</FormTitle>
+        <FormControl>
+          <Label>Email: {user.email}</Label>
+          <Label>Favourite Team: {user.favouriteTeam}</Label>
+        </FormControl>
+        <Button 
+        onClick={onLogout}>Logout</Button>
+    </FixedContainer>
+    
   );
 };
 
