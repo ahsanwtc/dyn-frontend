@@ -36,13 +36,17 @@ const Profile = () => {
 
   return (
     <FixedContainer size={275}>
-      <FormTitle>Profile</FormTitle>
-        <FormControl>
-          <Label>Email: {user.email}</Label>
-          <Label>Favourite Team: {user.favouriteTeam}</Label>
-        </FormControl>
-        <Button 
-        onClick={onLogout}>Logout</Button>
+      {loading && <pre>Loading...</pre>}
+      {!loading && 
+        <>
+          <FormTitle>Profile</FormTitle>
+          <FormControl>
+            <Label>Email: {user.email}</Label>
+            <Label>Favourite Team: {user.favouriteTeam}</Label>
+          </FormControl>
+          <Button onClick={onLogout}>Logout</Button>
+        </>
+      }
     </FixedContainer>
     
   );
