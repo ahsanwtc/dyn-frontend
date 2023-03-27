@@ -14,8 +14,12 @@ const Profile = () => {
     const service = async () => {
       setLoading(true);
       const profile = await getProfile();
+
+      if (profile.error) {
+        navigate('/login');
+      }
       
-      if (!profile.error) {
+      if (profile.data) {
         setUser(profile.data);
       }
 
@@ -26,7 +30,7 @@ const Profile = () => {
       service();
     }
 
-  }, [user, setUser]);
+  }, [user, setUser, navigate]);
   
   const onLogout = () => {
     removeAccessToken();

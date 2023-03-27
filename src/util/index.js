@@ -89,7 +89,7 @@ export const getProfile = async () => {
     }
   }
 
-  return null;
+  return { error: 'Unknown error!' };
 };
 
 export const login = async ({ email, password }) => {
